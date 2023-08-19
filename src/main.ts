@@ -1,8 +1,7 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
+import 'normalize.css'
+import './assets/css/index.less'
 import App from './App.vue'
 // 要声明它们是一个组件
 
