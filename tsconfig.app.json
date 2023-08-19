@@ -1,0 +1,14 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
+  "exclude": ["src/**/__tests__/*"],
+  "compilerOptions": {
+    // 合成(是tsconfig.json的一个引入)
+    "composite": true,
+    "baseUrl": ".",
+    "paths": {
+      // 这里是为了代码提示
+      "@/*": ["./src/*"]
+    }
+  }
+}
