@@ -25,12 +25,13 @@ import { ElMessage } from 'element-plus'
 import type { FormRules, ElForm } from 'element-plus'
 import useLoginStore from '@/stores/login/login'
 import type { IAccount } from '@/types'
+import { localCache } from '@/utils/cache'
 
 // 1.定义account数据
 // 表单双向绑定这个对象
 const account = reactive<IAccount>({
-  name: '',
-  password: ''
+  name: localCache.getCache('name') ?? '',
+  password: localCache.getCache('password') ?? ''
 })
 
 // 2.定义校验规则
@@ -64,7 +65,7 @@ const accountRules: FormRules = {
 const formRef = ref<InstanceType<typeof ElForm>>()
 const loginStore = useLoginStore()
 
-function loginAction() {
+function loginAction(isRemPwd: boolean) {
   // validate方法 : 是否符合规则
   formRef.value?.validate((valid) => {
     if (valid) {
@@ -73,7 +74,16 @@ function loginAction() {
       const password = account.password
 
       // 2.向服务器发送网络请求(携带账号和密码)
-      loginStore.loginAccountAction({ name, password })
+      loginStore.loginAccountAction({ name, password }).then((res) => {
+        // 3.判断是否需要记住密码
+        if (isRemPwd) {
+          localCache.setCache('name', name)
+          localCache.setCache('password', password)
+        } else {
+          localCache.removeCache('name')
+          localCache.removeCache('password')
+        }
+      })
     } else {
       ElMessage.error('Oops, 请您输入正确的格式后再操作~~')
     }

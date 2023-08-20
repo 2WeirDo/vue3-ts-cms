@@ -50,12 +50,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import PaneAccount from './pane-account.vue'
 import PanePhone from './pane-phone.vue'
+import { localCache } from '@/utils/cache'
 
 const activeName = ref('account')
-const isRemPwd = ref(false)
+// 实时更新状态
+const isRemPwd = ref<boolean>(localCache.getCache('isRemPwd') ?? false)
+watch(isRemPwd, (newValue) => {
+  localCache.setCache('isRemPwd', newValue)
+})
 
 // 注意这里泛型传递的子组件类型
 // InstanceType用于构造一个由所有Type的构造函数的实例类型组成的类型, 就是获取子组件实例的类型
@@ -64,7 +69,7 @@ const accountRef = ref<InstanceType<typeof PaneAccount>>()
 function handleLoginBtnClick() {
   if (activeName.value === 'account') {
     // 有可能没有输入帐号
-    accountRef.value?.loginAction()
+    accountRef.value?.loginAction(isRemPwd.value)
   } else {
     console.log('用户在进行手机登录')
   }
