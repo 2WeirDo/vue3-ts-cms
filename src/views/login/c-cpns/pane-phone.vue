@@ -1,13 +1,38 @@
 <template>
   <div class="panel-phone">
-    <h2>这里就还没有做啦</h2>
+    <el-form label-width="60px" size="large">
+      <el-form-item label="手机号">
+        <el-input v-model="number" />
+      </el-form-item>
+      <el-form-item label="验证码">
+        <div class="verify-code">
+          <el-input />
+          <el-button class="get-btn" type="primary">获取验证码</el-button>
+        </div>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+import { ElMessage } from 'element-plus'
+const number = ref()
+watch(number, (newValue) => {
+  ElMessage.warning('Oops, 目前手机号登录功能未开放哦~~')
+})
+</script>
 
 <style lang="less" scoped>
 .panel-phone {
-  color: rgb(130, 75, 115);
+  color: red;
+}
+
+.verify-code {
+  display: flex;
+
+  .get-btn {
+    margin-left: 8px;
+  }
 }
 </style>
