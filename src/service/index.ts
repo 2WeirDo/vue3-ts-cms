@@ -14,8 +14,8 @@ export const hyRequest = new HYRequest({
       // 每一个请求都自动携带token
       const token = localCache.getCache(LOGIN_TOKEN)
       if (config.headers && token) {
-        // 类型缩小
-        config.headers.Authorization = 'Bearer' + localCache.getCache(LOGIN_TOKEN)
+        // 类型缩小 (注意Bearer后面有空格)
+        config.headers.Authorization = 'Bearer ' + token
       }
       return config
     },

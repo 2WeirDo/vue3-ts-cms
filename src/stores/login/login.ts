@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { accountLoginRequest, getUserInfoById } from '@/service/login/login'
+import { accountLoginRequest, getUserInfoById, getUserMenusByRoleId } from '@/service/login/login'
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
@@ -7,11 +7,20 @@ import router from '@/router'
 // 防止敲错
 import { LOGIN_TOKEN } from '@/global/constants'
 
+interface ILoginState {
+  token: string
+  userInfo: any
+  userMenus: any
+}
+
 const useLoginStore = defineStore('login', {
-  state: () => ({
+  // 如何指定state的类型?
+  state: (): ILoginState => ({
     // 没有值就是空字符串
     token: localCache.getCache(LOGIN_TOKEN) ?? '',
-    userInfo: {}
+    // 用户信息
+    userInfo: {},
+    userMenus: []
   }),
   actions: {
     async loginAccountAction(account: IAccount) {
@@ -26,10 +35,14 @@ const useLoginStore = defineStore('login', {
 
       // 3.获取登录用户的详细信息(role信息)
       const userInfoResult = await getUserInfoById(id)
-      const userInfo = userInfoResult.data
-      this.userInfo = userInfo
+      this.userInfo = userInfoResult.data
+      // console.log(this.userInfo.role)
 
-      // 4.页面跳转(main页面)
+      // 4.根据角色请求用户的权限(菜单menus)
+      const userMenusResult = await getUserMenusByRoleId(this.userInfo.role.id)
+      this.userMenus = userMenusResult.data
+
+      // 5.页面跳转(main页面)
       router.push('/main')
     }
   }

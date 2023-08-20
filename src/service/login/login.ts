@@ -10,6 +10,12 @@ export function accountLoginRequest(account: IAccount) {
 
 export function getUserInfoById(id: number) {
   return hyRequest.get({
-    url: `/users{id}`
+    url: `/users/${id}`
+  })
+}
+
+export function getUserMenusByRoleId(id: number) {
+  return hyRequest.get({
+    url: `/role/${id}/menu`
   })
 }
