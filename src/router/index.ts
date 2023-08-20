@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/main'
+      redirect: '/login'
       // 后面会有导航守卫进行判断
     },
     {

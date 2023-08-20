@@ -8,10 +8,10 @@ const req = new HYRequest({
 })
 
 export const hyRequest = new HYRequest({
-  baseURL: 'http://codercba.com:1888/airbnb/api',
-  timeout: 8000,
-
   // 传递特定拦截器
+  baseURL: BASE_URL,
+  timeout: TIME_OUT,
+
   // 因为原本传递的类型中没有interceptors这个属性, 我们就要针对于原本类型进行拓展
   interceptors: {
     requestSuccessFn: (config) => {
