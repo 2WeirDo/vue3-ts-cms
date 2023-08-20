@@ -40,7 +40,7 @@ const accountRules: FormRules = {
     {
       pattern: /^[a-z0-9]{6,20}$/,
       message: '必须是6~20数字或字母组成~',
-      trigger: 'change'
+      trigger: 'blur'
     }
     // {
     //   min: 4,

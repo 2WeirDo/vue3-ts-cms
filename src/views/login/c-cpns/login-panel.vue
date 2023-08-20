@@ -78,7 +78,12 @@ function handleLoginBtnClick() {
 
   .title {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+  }
+
+  .tabs {
+    box-shadow: 1px 1px 7px black;
+    border-radius: 20px;
   }
 
   .label {
