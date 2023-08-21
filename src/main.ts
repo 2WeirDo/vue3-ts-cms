@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+// import { createPinia } from 'pinia'
 import 'normalize.css'
 import './assets/css/index.less'
 import App from './App.vue'
@@ -15,7 +15,7 @@ import registerIcons from './global/register-icons'
 
 const app = createApp(App)
 
-app.use(createPinia())
+// app.use(createPinia())
 app.use(router)
 app.use(pinia)
 // 导入图标

@@ -1,16 +1,23 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="240px">Aside</el-aside>
+      <el-aside width="240px">
+        <main-menu />
+      </el-aside>
       <el-container>
-        <el-header height="50px">Header</el-header>
+        <el-header height="50px">
+          <main-header />
+        </el-header>
         <el-main>Main</el-main>
       </el-container>
     </el-container>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import mainMenu from '@/components/main-menu/main-menu.vue'
+import mainHeader from '@/components/main-header/main-header.vue'
+</script>
 
 <style lang="less" scoped>
 .main {
@@ -18,14 +25,26 @@
   color: skyblue;
   .main-content {
     height: 100%;
+
     .el-aside {
-      background-color: darkgoldenrod;
+      overflow-x: hidden;
+      overflow-y: auto;
+      line-height: 200px;
+      text-align: left;
+      cursor: pointer;
+      background-color: #001529;
+      scrollbar-width: none; /* firefox */
+      -ms-overflow-style: none; /* IE 10+ */
+
+      transition: width 0.3s ease;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
-    .el-header {
-      background-color: antiquewhite;
-    }
+
     .el-main {
-      background-color: darkcyan;
+      background-color: #f0f2f5;
     }
   }
 }
