@@ -11,7 +11,9 @@
           <!-- 子组件自定义了事件, aside缩小的功能 -->
           <main-header @fold-change="handleFoldChange" />
         </el-header>
-        <el-main>Main</el-main>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
       </el-container>
     </el-container>
   </div>

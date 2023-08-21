@@ -60,6 +60,7 @@ const userMenus = loginStore.userMenus
 // 2.监听item的点击
 const router = useRouter()
 function handleItemClick(item: any) {
+  // 这里后端传入的url就是我们要跳转的url
   const url = item.url
   router.push(url)
 }

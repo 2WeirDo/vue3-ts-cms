@@ -114,6 +114,7 @@ function handleExitClick() {
   // 因为直接写是覆盖不了这东西的, 所以我们要从全局去修改
   // 另外弹出来的dropdown没有渲染到app里面, 用:deep找不到
   // global是给整个html设置样式
+  // 选子组件的根元素可以不用deep, 非根元素要用deep, 不是子组件要用global
   :global(.el-dropdown-menu__item) {
     line-height: 36px !important;
     padding: 6px 22px;
