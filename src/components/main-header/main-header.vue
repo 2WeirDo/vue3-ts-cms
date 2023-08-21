@@ -9,13 +9,14 @@
     <div class="content">
       <div class="breadcrumb">面包屑</div>
       <!-- 个人信息 -->
-      <div>个人信息</div>
+      <header-info />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import HeaderInfo from './c-cpns/header-info.vue'
 
 // 0.内部自定义事件
 const emit = defineEmits(['foldChange'])

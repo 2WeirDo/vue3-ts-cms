@@ -3,6 +3,7 @@ import { accountLoginRequest, getUserInfoById, getUserMenusByRoleId } from '@/se
 import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
+import { ElMessage } from 'element-plus'
 
 // 防止敲错
 import { LOGIN_TOKEN } from '@/global/constants'
@@ -48,6 +49,7 @@ const useLoginStore = defineStore('login', {
 
       // 5.页面跳转(main页面)
       router.push('/main')
+      ElMessage.success('您已登录成功~~')
     }
   }
 })
