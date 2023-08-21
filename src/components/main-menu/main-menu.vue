@@ -3,7 +3,7 @@
     <!-- logo -->
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" alt="" />
-      <h2>许三多管理系统</h2>
+      <h2 v-show="!isFold" class="title">后台管理系统</h2>
     </div>
     <!-- menu -->
     <div class="menu">
@@ -21,6 +21,9 @@
             <template #title>
               <!-- 字符串: el-icon-monitor => 组件 component动态组件 -->
               <el-icon>
+                <!-- 动态组件传递动态图标 (把字符串转换为组件) -->
+                <!-- 实际上返回的是 比如: <monitor /> 我们只需要名字就行
+                而后端返回的数据是el-icon-monitor , 因此我我们就需要截取-->
                 <component :is="item.icon.split('-icon-')[1]" />
               </el-icon>
               <span>{{ item.name }}</span>
@@ -76,7 +79,9 @@ function handleItemClick(item: any) {
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-
+  .h2 {
+    color: rgb(244, 242, 242);
+  }
   .img {
     height: 100%;
     margin: 0 10px;
