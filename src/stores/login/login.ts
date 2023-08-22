@@ -4,6 +4,7 @@ import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 
 // 防止敲错
 import { LOGIN_TOKEN } from '@/global/constants'
@@ -17,11 +18,10 @@ interface ILoginState {
 const useLoginStore = defineStore('login', {
   // 如何指定state的类型?
   state: (): ILoginState => ({
-    // 没有值就是空字符串
-    token: localCache.getCache(LOGIN_TOKEN) ?? '',
+    token: '',
     // 用户信息
-    userInfo: localCache.getCache('userInfo') ?? {},
-    userMenus: localCache.getCache('userMenus') ?? []
+    userInfo: {},
+    userMenus: []
   }),
   actions: {
     async loginAccountAction(account: IAccount) {
@@ -30,9 +30,9 @@ const useLoginStore = defineStore('login', {
       const id = loginResult.data.id
       const name = loginResult.data.name
       this.token = loginResult.data.token
-
       // 注意这里我们要先获取到token才能进行后续操作
       localCache.setCache(LOGIN_TOKEN, this.token)
+
       // 2.获取登录用户的详细信息(role信息)
       const userInfoResult = await getUserInfoById(id)
       this.userInfo = userInfoResult.data
@@ -47,9 +47,30 @@ const useLoginStore = defineStore('login', {
       localCache.setCache('userInfo', userInfoResult.data)
       localCache.setCache('userMenus', userMenusResult.data)
 
-      // 5.页面跳转(main页面)
+      // 5.动态添加路由(重要)
+      const routes = mapMenusToRoutes(this.userMenus)
+      routes.forEach((route) => router.addRoute('main', route))
+
+      // 6.页面跳转(main页面)
       router.push('/main')
       ElMessage.success('您已登录成功~~')
+    },
+
+    loadLocalCacheAction() {
+      // 1.用户进行刷新默认加载数据
+      const token = localCache.getCache(LOGIN_TOKEN)
+      const userInfo = localCache.getCache('userInfo')
+      const userMenus = localCache.getCache('userMenus')
+      if (token && userInfo && userMenus) {
+        // 说明用户已经登录
+        this.token = token
+        this.userInfo = userInfo
+        this.userMenus = userMenus
+
+        // 2.动态添加路由
+        const routes = mapMenusToRoutes(userMenus)
+        routes.forEach((route) => router.addRoute('main', route))
+      }
     }
   }
 })
