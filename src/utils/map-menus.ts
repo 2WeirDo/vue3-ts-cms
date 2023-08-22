@@ -64,6 +64,8 @@ interface IBreadcrumbs {
   name: string
   path: string
 }
+
+// 获取面包屑信息
 export function mapPathToBreadcrumbs(path: string, userMenus: any[]) {
   // 1.定义面包屑
   const breadcrumbs: IBreadcrumbs[] = []
