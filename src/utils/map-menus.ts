@@ -31,11 +31,13 @@ export function mapMenusToRoutes(userMenus: any[]) {
     for (const submenu of menu.children) {
       const route = localRoutes.find((item) => item.path === submenu.url)
       if (route) {
-        // 1.给route的顶层菜单增加重定向功能(但是只需要添加一次即可)
+        // 1.给route的顶层菜单增加重定向功能(但是只需要添加一次即可), 也就是只添加第一个
+        // 因为一级路由无法跳转, 这里就是给添加一级路由匹配到的第一个子路由, 以后每次一点击一级路由就跳转到第一个子路由
         if (!routes.find((item) => item.path === menu.url)) {
+          // 这里的route就是上方item.path === submenu.url中的子菜单
           routes.push({ path: menu.url, redirect: route.path })
         }
-        // 2.将二级菜单对应的路径
+        // 2.将二级菜单对应的路径加到routes中国
         routes.push(route)
       }
       // 记录第一个被匹配到的菜单
@@ -74,6 +76,7 @@ export function mapPathToBreadcrumbs(path: string, userMenus: any[]) {
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
       if (submenu.url === path) {
+        // 好在每一层只有两个, 都push然后顺序输出就行
         // 1.顶层菜单
         breadcrumbs.push({ name: menu.name, path: menu.url })
         // 2.匹配菜单
