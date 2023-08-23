@@ -3,8 +3,10 @@
     <!-- 1.输入搜索关键字的表单 -->
     <el-form :model="searchForm" ref="formRef" label-width="80px" size="large">
       <el-row :gutter="20">
+        <!-- 一个el-row就行了, 后面会自动排(前三个占满后面就会新增一排) -->
         <!-- 减去间距为20, 一共24 , 就是三个el-form-item为一行 -->
         <el-col :span="8">
+          <!-- 要想有重置功能, 必须要给每个el-form-item绑定prop属性, 这样它才知道对你哪个字段进行重置 -->
           <el-form-item label="用户名" prop="name">
             <el-input v-model="searchForm.name" placeholder="请输入查询的用户名" />
           </el-form-item>
@@ -34,8 +36,9 @@
         </el-col>
         <el-col :span="8">
           <el-form-item label="创建时间" prop="createAt">
+            <!-- 不知道为什么, 这里日期的v-model前不能加: -->
             <el-date-picker
-              :v-model="searchForm.createAt"
+              v-model="searchForm.createAt"
               type="daterange"
               range-separator="--"
               start-placeholder="开始时间"
@@ -63,12 +66,13 @@ const searchForm = reactive({
   realname: '',
   cellphone: '',
   enable: 1,
-  createAt: []
+  createAt: ''
 })
 
 // 重置操作
 const formRef = ref<InstanceType<typeof ElForm>>()
 function handleResetClick() {
+  // resetFields就是element-plus提供的重置函数
   formRef.value?.resetFields()
 }
 
