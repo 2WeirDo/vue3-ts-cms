@@ -1,13 +1,18 @@
 <template>
   <div class="user">
-    <h2>user</h2>
+    <user-search />
+    <user-content />
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import userSearch from './c-cpns/user-search.vue'
+import userContent from './c-cpns/user-content.vue'
+</script>
 
 <style lang="less" scoped>
 .user {
-  color: red;
+  color: skyblue;
+  border-radius: 8px;
 }
 </style>
