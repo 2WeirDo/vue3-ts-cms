@@ -12,7 +12,6 @@ import userContent from './c-cpns/user-content.vue'
 
 <style lang="less" scoped>
 .user {
-  color: skyblue;
   border-radius: 8px;
 }
 </style>
