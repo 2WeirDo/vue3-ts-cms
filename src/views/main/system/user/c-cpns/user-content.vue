@@ -96,15 +96,20 @@ function handleCurrentChange() {
 }
 
 // 由于我们不管是在初始进入还是切换页码还是切换每页多少条都会重新发送请求, 所以我们定义一个函数, 发送网络请求
-function fetchUserListData() {
+// 我们还要接收一个参数是拿到的searchForm的数据
+function fetchUserListData(formData: any = {}) {
   // 1.获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
 
   // 发送网络请求
-  const info = { size, offset }
-  systemStore.postUsersListAction(info)
+  const pageInfo = { size, offset }
+  // 将数据合并作为请求的请求数据, 以此来获取精确列表
+  const queryInfo = { ...pageInfo, ...formData }
+  systemStore.postUsersListAction(queryInfo)
 }
+// 因为在user-search组件中要使用这个方法, 所以我们要把这个方法暴露出去
+defineExpose({ fetchUserListData })
 </script>
 <style lang="less" scoped>
 .content {
