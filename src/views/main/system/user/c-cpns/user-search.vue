@@ -69,7 +69,7 @@ const searchForm = reactive({
   name: '',
   realname: '',
   cellphone: '',
-  enable: 1,
+  enable: '',
   createAt: ''
 })
 

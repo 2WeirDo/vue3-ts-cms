@@ -43,8 +43,18 @@
 
         <el-table-column align="center" label="操作" width="180px">
           <!-- 放置插槽 -->
-          <el-button size="large" icon="Edit" type="primary" text> 编辑 </el-button>
-          <el-button size="large" icon="Delete" type="danger" text> 删除 </el-button>
+          <template #default="scope">
+            <el-button size="large" icon="Edit" type="primary" text> 编辑 </el-button>
+            <el-button
+              size="large"
+              icon="Delete"
+              type="danger"
+              text
+              @click="handleDelete(scope.row.id)"
+            >
+              删除
+            </el-button>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -68,6 +78,7 @@ import { storeToRefs } from 'pinia'
 import useSystemStore from '@/stores/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
@@ -95,6 +106,7 @@ function handleCurrentChange() {
   fetchUserListData()
 }
 
+// 4.定义一个函数, 发送网络请求
 // 由于我们不管是在初始进入还是切换页码还是切换每页多少条都会重新发送请求, 所以我们定义一个函数, 发送网络请求
 // 我们还要接收一个参数是拿到的searchForm的数据
 function fetchUserListData(formData: any = {}) {
@@ -108,7 +120,13 @@ function fetchUserListData(formData: any = {}) {
   const queryInfo = { ...pageInfo, ...formData }
   systemStore.postUsersListAction(queryInfo)
 }
-// 因为在user-search组件中要使用这个方法, 所以我们要把这个方法暴露出去
+// 5.编辑和删除的操作
+function handleDelete(id: number) {
+  systemStore.deleteUserByIdAction(id)
+  ElMessage.success('删除成功~~')
+}
+
+// 因为在user-search组件中要使用fetchUserListData这个方法, 所以我们要把这个方法暴露出去
 defineExpose({ fetchUserListData })
 </script>
 <style lang="less" scoped>

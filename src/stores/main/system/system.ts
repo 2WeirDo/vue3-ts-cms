@@ -14,6 +14,11 @@ const useSystemStore = defineStore('system', {
       const { totalCount, list } = usersListResult.data
       this.usersTotalCount = totalCount
       this.usersList = list
+    },
+    async deleteUserByIdAction(id: number) {
+      const deleteResult = await this.deleteUserByIdAction(id)
+      // 删完后更新一下用户列表
+      this.postUsersListAction({ offset: 0, size: 10 })
     }
   }
 })
