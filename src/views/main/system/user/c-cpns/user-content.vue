@@ -16,7 +16,19 @@
         <el-table-column align="center" label="用户名" prop="name" width="150px" />
         <el-table-column align="center" label="真实姓名" prop="realname" width="140px" />
         <el-table-column align="center" label="手机号码" prop="cellphone" width="140px" />
-        <el-table-column align="center" label="状态" prop="enable" width="90px" />
+
+        <!-- 这里的`状态`我们不想光显示后台返回的1或者0, 而是显示一个自定义的图标 -->
+        <!-- 我们要拿到enable的值才行 -->
+        <!-- 这里我们使用作用域插槽 -->
+        <el-table-column align="center" label="状态" prop="enable" width="90px">
+          <!-- 解释一下: #default是默认的名字, 我们会拿到一个对象scope.row, 里面装的就是所有传过来的属性 -->
+          <template #default="scope">
+            <el-button size="small" :type="scope.row.enable ? 'primary' : 'danger'" plain>
+              {{ scope.row.enable ? '启用' : '禁用' }}
+            </el-button>
+          </template>
+        </el-table-column>
+
         <el-table-column align="center" label="创建时间" prop="createAt" />
         <el-table-column align="center" label="更新时间" prop="updateAt" />
 
