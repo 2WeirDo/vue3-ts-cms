@@ -41,14 +41,25 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="操作" width="160px">
+        <el-table-column align="center" label="操作" width="180px">
           <!-- 放置插槽 -->
-          <el-button size="small" icon="Edit" type="primary" text> 编辑 </el-button>
-          <el-button size="small" icon="Delete" type="danger" text> 删除 </el-button>
+          <el-button size="large" icon="Edit" type="primary" text> 编辑 </el-button>
+          <el-button size="large" icon="Delete" type="danger" text> 删除 </el-button>
         </el-table-column>
       </el-table>
     </div>
-    <div class="pagination">分页</div>
+    <div class="pagination">
+      <!-- 可以用v-model的自定义名字 -->
+      <el-pagination
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[10, 20, 30]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="usersTotalCount"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
@@ -56,6 +67,7 @@
 import { storeToRefs } from 'pinia'
 import useSystemStore from '@/stores/main/system/system'
 import { formatUTC } from '@/utils/format'
+import { ref } from 'vue'
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
@@ -66,7 +78,13 @@ systemStore.postUsersListAction()
 // 2.获取usersList数据,进行展示
 // 因为上一步是异步操作, 还没来结果
 // 用storeToRefs包裹的东西就是响应式的, 这里用computed也可以
-const { usersList } = storeToRefs(systemStore)
+const { usersList, usersTotalCount } = storeToRefs(systemStore)
+
+// 3.页码相关的逻辑
+const currentPage = ref(1)
+const pageSize = ref()
+function handleSizeChange() {}
+function handleCurrentChange() {}
 </script>
 
 <style lang="less" scoped>
@@ -101,5 +119,10 @@ const { usersList } = storeToRefs(systemStore)
     margin-left: 2px;
     padding: 5px 8px;
   }
+}
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
 }
 </style>
