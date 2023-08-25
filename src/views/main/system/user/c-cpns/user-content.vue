@@ -71,9 +71,12 @@ import { ref } from 'vue'
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
+const currentPage = ref(1)
+const pageSize = ref()
 
-// 注意这一步是异步操作
-systemStore.postUsersListAction()
+// 注意这一步是异步操作 (发送网络请求获取列表和页码数据)
+// 要传入一个参数是关于页码数据的
+fetchUserListData()
 
 // 2.获取usersList数据,进行展示
 // 因为上一步是异步操作, 还没来结果
@@ -81,12 +84,28 @@ systemStore.postUsersListAction()
 const { usersList, usersTotalCount } = storeToRefs(systemStore)
 
 // 3.页码相关的逻辑
-const currentPage = ref(1)
-const pageSize = ref()
-function handleSizeChange() {}
-function handleCurrentChange() {}
-</script>
 
+function handleSizeChange() {
+  // 每页多少条发生变化
+  fetchUserListData()
+}
+
+function handleCurrentChange() {
+  // 页码变化
+  fetchUserListData()
+}
+
+// 由于我们不管是在初始进入还是切换页码还是切换每页多少条都会重新发送请求, 所以我们定义一个函数, 发送网络请求
+function fetchUserListData() {
+  // 1.获取offset/size
+  const size = pageSize.value
+  const offset = (currentPage.value - 1) * size
+
+  // 发送网络请求
+  const info = { size, offset }
+  systemStore.postUsersListAction(info)
+}
+</script>
 <style lang="less" scoped>
 .content {
   margin-top: 15px;
