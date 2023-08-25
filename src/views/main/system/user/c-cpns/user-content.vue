@@ -11,11 +11,11 @@
         <!-- 选择 -->
         <el-table-column align="center" type="selection" width="50px" />
         <!-- 序号 -->
-        <el-table-column align="center" type="index" label="序号" width="60px" />
+        <el-table-column align="center" type="index" label="序号" width="80px" />
 
         <el-table-column align="center" label="用户名" prop="name" width="150px" />
-        <el-table-column align="center" label="真实姓名" prop="realname" width="140px" />
-        <el-table-column align="center" label="手机号码" prop="cellphone" width="140px" />
+        <el-table-column align="center" label="真实姓名" prop="realname" width="150px" />
+        <el-table-column align="center" label="手机号码" prop="cellphone" width="150px" />
 
         <!-- 这里的`状态`我们不想光显示后台返回的1或者0, 而是显示一个自定义的图标 -->
         <!-- 我们要拿到enable的值才行 -->
@@ -29,8 +29,17 @@
           </template>
         </el-table-column>
 
-        <el-table-column align="center" label="创建时间" prop="createAt" />
-        <el-table-column align="center" label="更新时间" prop="updateAt" />
+        <!-- 同样, 这里它后台返回的时间格式我们也不满意 -->
+        <el-table-column align="center" label="创建时间" prop="createAt">
+          <template #default="scope">
+            {{ formatUTC(scope.row.createAt) }}
+          </template>
+        </el-table-column>
+        <el-table-column align="center" label="更新时间" prop="updateAt">
+          <template #default="scope">
+            {{ formatUTC(scope.row.updateAt) }}
+          </template>
+        </el-table-column>
 
         <el-table-column align="center" label="操作" width="160px">
           <!-- 放置插槽 -->
@@ -46,6 +55,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import useSystemStore from '@/stores/main/system/system'
+import { formatUTC } from '@/utils/format'
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
