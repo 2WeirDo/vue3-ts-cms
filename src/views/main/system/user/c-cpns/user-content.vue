@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="handleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
       <!-- 这里是根据el-table的:data数组加上el-table-column的prop属性来遍历数据的 -->
@@ -23,7 +23,7 @@
         <el-table-column align="center" label="状态" prop="enable" width="90px">
           <!-- 解释一下: #default是默认的名字, 我们会拿到一个对象scope.row, 里面装的就是所有传过来的属性 -->
           <template #default="scope">
-            <el-button size="small" :type="scope.row.enable ? 'primary' : 'danger'" plain>
+            <el-button size="small" :type="scope.row.enable ? 'success' : 'danger'" plain>
               {{ scope.row.enable ? '启用' : '禁用' }}
             </el-button>
           </template>
@@ -44,7 +44,16 @@
         <el-table-column align="center" label="操作" width="180px">
           <!-- 放置插槽 -->
           <template #default="scope">
-            <el-button size="large" icon="Edit" type="primary" text> 编辑 </el-button>
+            <el-button
+              size="small"
+              icon="Edit"
+              type="primary"
+              text
+              @click="handleEditBtnClick(scope.row)"
+            >
+              <!-- 这里传入了scope.row也就是整条数据, 因为待会编辑时要回显 -->
+              编辑
+            </el-button>
             <el-button
               size="large"
               icon="Delete"
@@ -79,6 +88,8 @@ import useSystemStore from '@/stores/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
+
+const emit = defineEmits(['newClick', 'editClick'])
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
@@ -120,10 +131,20 @@ function fetchUserListData(formData: any = {}) {
   const queryInfo = { ...pageInfo, ...formData }
   systemStore.postUsersListAction(queryInfo)
 }
-// 5.编辑和删除的操作
+// 5.删除的操作
 function handleDelete(id: number) {
   systemStore.deleteUserByIdAction(id)
   ElMessage.success('删除成功~~')
+}
+
+// 6.新建用户操作
+function handleNewUserClick() {
+  emit('newClick')
+}
+
+// 7.点击编辑按钮
+function handleEditBtnClick(itemData: any) {
+  emit('editClick', itemData)
 }
 
 // 因为在user-search组件中要使用fetchUserListData这个方法, 所以我们要把这个方法暴露出去
@@ -145,7 +166,7 @@ defineExpose({ fetchUserListData })
   .title {
     font-size: 30px;
     text-shadow:
-      1px 1px 3px rgb(0, 0, 0),
+      1px 1px 5px rgb(0, 0, 0),
       -1px 1px 4px white;
     color: rgb(55, 63, 167);
     font-family: Georgia, 'Times New Roman', Times, serif;
