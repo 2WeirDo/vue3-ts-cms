@@ -2,7 +2,11 @@ import {
   deleteUserById,
   editUserData,
   newUserData,
-  postUsersListData
+  postUsersListData,
+  deletePageById,
+  editPageData,
+  newPageData,
+  postPageListData
 } from '@/service/main/system/system'
 import { defineStore } from 'pinia'
 import type { ISystemState } from './type'
@@ -12,7 +16,10 @@ const useSystemStore = defineStore('system', {
   state: (): ISystemState => ({
     // 我们要指定userList的类型, 否则是拿不到东西的
     usersList: [],
-    usersTotalCount: 0
+    usersTotalCount: 0,
+
+    pageList: [],
+    pageTotalCount: 0
   }),
   actions: {
     async postUsersListAction(queryInfo: any) {
@@ -43,6 +50,29 @@ const useSystemStore = defineStore('system', {
 
       // 2.重新请求新的数据
       this.postUsersListAction({ offset: 0, size: 10 })
+    },
+    /** 针对页面的数据: 增删改查 */
+    async postPageListAction(pageName: string, queryInfo: any) {
+      const pageListResult = await postPageListData(pageName, queryInfo)
+      const { totalCount, list } = pageListResult.data
+
+      this.pageList = list
+      this.pageTotalCount = totalCount
+    },
+    async deletePageByIdAction(pageName: string, id: number) {
+      const deleteResult = await deletePageById(pageName, id)
+      console.log(deleteResult)
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+    async newPageDataAction(pageName: string, pageInfo: any) {
+      const newResult = await newPageData(pageName, pageInfo)
+      console.log(newResult)
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
+    },
+    async editPageDataAction(pageName: string, id: number, pageInfo: any) {
+      const editResult = await editPageData(pageName, id, pageInfo)
+      console.log(editResult)
+      this.postPageListAction(pageName, { offset: 0, size: 10 })
     }
   }
 })

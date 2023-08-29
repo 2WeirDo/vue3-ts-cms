@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="header">
-      <h3 class="title">用户列表</h3>
+      <h3 class="title">用户列表 😈</h3>
       <el-button type="primary" @click="handleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
@@ -45,7 +45,7 @@
           <!-- 放置插槽 -->
           <template #default="scope">
             <el-button
-              size="small"
+              size="large"
               icon="Edit"
               type="primary"
               text
@@ -164,12 +164,12 @@ defineExpose({ fetchUserListData })
   margin-bottom: 20px;
 
   .title {
-    font-size: 30px;
+    font-size: 40px;
     text-shadow:
       1px 1px 5px rgb(0, 0, 0),
       -1px 1px 4px white;
     color: rgb(55, 63, 167);
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: STCaiyun;
   }
 }
 
