@@ -94,7 +94,7 @@ const emit = defineEmits(['newClick', 'editClick'])
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
 const currentPage = ref(1)
-const pageSize = ref()
+const pageSize = ref(10)
 
 // 注意这一步是异步操作 (发送网络请求获取列表和页码数据)
 // 要传入一个参数是关于页码数据的
