@@ -19,18 +19,36 @@
         <span class="parent">呵呵呵: {{ scope.row[scope.prop] }}</span>
       </template>
     </page-content>
-    <page-modal ref="modalRef" />
+    <page-modal :modal-config="modalConfigRef" ref="modalRef" />
   </div>
 </template>
 
 <script setup lang="ts" name="department">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import useMainStore from '@/stores/main/main'
 import PageSearch from '@/components/page-search/page-search.vue'
 import PageContent from '@/components/page-content/page-content.vue'
-import PageModal from './c-cpns/page-modal.vue'
+import PageModal from '@/components/page-modal/page-modal.vue'
 
 import searchConfig from './config/search.config'
 import contentConfig from './config/content.config'
+import modalConfig from './config/modal.config'
+
+// 对modalConfig进行操作
+// 传递有哪些上级部门
+const modalConfigRef = computed(() => {
+  const mainStore = useMainStore()
+  const departments = mainStore.entireDepartments.map((item) => {
+    // 这个item里面只有name和id, 这是后端规定的
+    return { label: item.name, value: item.id }
+  })
+  modalConfig.formItems.forEach((item) => {
+    if (item.prop === 'parentId') {
+      item.options.push(...departments)
+    }
+  })
+  return modalConfig
+})
 
 // 点击search, content的操作
 const contentRef = ref<InstanceType<typeof PageContent>>()
