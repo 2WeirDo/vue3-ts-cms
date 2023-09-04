@@ -53,7 +53,7 @@ import { mapMenuListToIds } from '@/utils/map-menus'
 const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 
 // 将editCallback传递给usePageModal
-const { modalRef, handleNewClick, handleEditClick } = usePageModal(editCallback)
+const { modalRef, handleNewClick, handleEditClick } = usePageModal(newCallback, editCallback)
 
 // 获取完整的菜单
 const mainStore = useMainStore()
@@ -71,6 +71,12 @@ function handleElTreeCheck(data1: any, data2: any) {
 }
 
 const treeRef = ref<InstanceType<typeof ElTree>>()
+
+function newCallback() {
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
+}
 
 // 拿到itemData.menulist将其设为tree的默认值就行了,
 // 这样你编辑角色的时候就可以回显你之前选择的权限了

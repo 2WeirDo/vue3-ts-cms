@@ -1,5 +1,5 @@
 <template>
-  <div class="search">
+  <div class="search" v-if="isQuery">
     <!-- 1.输入搜索关键字的表单 -->
     <el-form :model="searchForm" ref="formRef" label-width="80px" size="large">
       <el-row :gutter="20">
@@ -60,9 +60,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
+import usePermissions from '@/hooks/usePermissions'
 
 // 定义自定义事件
 const emit = defineEmits(['queryClick', 'resetClick'])
+
+// 查询权限
+const isQuery = usePermissions('users:query')
 
 // 定义form你输入的数据
 const searchForm = reactive({

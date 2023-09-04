@@ -129,6 +129,7 @@ function handleCurrentChange() {
 
 // 4.定义函数, 用于发送网络请求
 function fetchPageListData(formData: any = {}) {
+  if (!isQuery) return
   // 1.获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size

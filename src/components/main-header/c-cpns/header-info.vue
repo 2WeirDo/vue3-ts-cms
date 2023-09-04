@@ -20,7 +20,7 @@
         <span class="user-info">
           <!-- 头像 -->
           <el-avatar :size="30" src="https://2weirdo.github.io/img/messi.jpg" />
-          <span class="name">weirdo</span>
+          <span class="name">{{ loginStore.userInfo.name }}</span>
         </span>
         <!-- 下拉菜单 -->
         <template #dropdown>
@@ -49,6 +49,9 @@ import { useRouter } from 'vue-router'
 import { LOGIN_TOKEN } from '@/global/constants'
 import { localCache } from '@/utils/cache'
 import { ElMessage } from 'element-plus'
+import useLoginStore from '@/stores/login/login'
+
+const loginStore = useLoginStore()
 
 const router = useRouter()
 function handleExitClick() {

@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3 class="title">用户列表 😈</h3>
-      <el-button type="primary" @click="handleNewUserClick">新建用户</el-button>
+      <el-button type="primary" v-if="isCreate" @click="handleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
       <!-- 这里是根据el-table的:data数组加上el-table-column的prop属性来遍历数据的 -->
@@ -45,6 +45,7 @@
           <!-- 放置插槽 -->
           <template #default="scope">
             <el-button
+              v-if="isUpdate"
               size="large"
               icon="Edit"
               type="primary"
@@ -55,6 +56,7 @@
               编辑
             </el-button>
             <el-button
+              v-if="isDelete"
               size="large"
               icon="Delete"
               type="danger"
@@ -88,8 +90,16 @@ import useSystemStore from '@/stores/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus'
+import usePermissions from '@/hooks/usePermissions'
 
+// 定义事件
 const emit = defineEmits(['newClick', 'editClick'])
+
+// 用户的权限判断
+const isCreate = usePermissions('users:create')
+const isDelete = usePermissions('users:delete')
+const isUpdate = usePermissions('users:update')
+const isQuery = usePermissions('users:query')
 
 // 1.发起action，请求usersList的数据
 const systemStore = useSystemStore()
@@ -121,6 +131,7 @@ function handleCurrentChange() {
 // 由于我们不管是在初始进入还是切换页码还是切换每页多少条都会重新发送请求, 所以我们定义一个函数, 发送网络请求
 // 我们还要接收一个参数是拿到的searchForm的数据
 function fetchUserListData(formData: any = {}) {
+  if (!isQuery) return
   // 1.获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
