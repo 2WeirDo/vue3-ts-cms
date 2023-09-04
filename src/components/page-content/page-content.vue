@@ -114,6 +114,23 @@ const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
 const systemStore = useSystemStore()
 const currentPage = ref(1)
 const pageSize = ref(10)
+
+// 监听systemStore中的actions(增删改)被执行
+// 这里用到$onAction方法, pinia官方提供的方法
+systemStore.$onAction(({ name, after }) => {
+  // 这里一个参数args
+  // 我们这里解构两个东西, name就是action的名称, after就代表成功之后要执行的, 执行完成之后才会来到after中
+  // 如果满足name是增删改其一, 就将页码回到1
+  after(() => {
+    if (
+      name === 'deletePageByIdAction' ||
+      name === 'editPageDataAction' ||
+      name === 'newPageDataAction'
+    ) {
+      currentPage.value = 1
+    }
+  })
+})
 fetchPageListData()
 
 // 2.获取usersList数据,进行展示

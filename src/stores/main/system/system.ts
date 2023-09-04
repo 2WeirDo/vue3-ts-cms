@@ -33,6 +33,9 @@ const useSystemStore = defineStore('system', {
       const deleteResult = await deleteUserById(id)
       // 删完后更新一下用户列表
       this.postUsersListAction({ offset: 0, size: 10 })
+      // 获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     },
     async newUserDataAction(userInfo: any) {
       // 1.创建新的用户
@@ -43,6 +46,9 @@ const useSystemStore = defineStore('system', {
       }
       // 2.重新请求新的数据
       this.postUsersListAction({ offset: 0, size: 10 })
+      // 获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     },
     async editUserDataAction(id: number, userInfo: any) {
       // 1.更新用户的数据
@@ -51,7 +57,15 @@ const useSystemStore = defineStore('system', {
 
       // 2.重新请求新的数据
       this.postUsersListAction({ offset: 0, size: 10 })
+      // 获取完整的数据
+      const mainStore = useMainStore()
+      mainStore.fetchEntireDataAction()
     },
+
+    // 呵呵呵
+    // 呵呵呵
+    ///额呵呵呵
+    // 这是针对页面
     /** 针对页面的数据: 增删改查 */
     async postPageListAction(pageName: string, queryInfo: any) {
       const pageListResult = await postPageListData(pageName, queryInfo)
