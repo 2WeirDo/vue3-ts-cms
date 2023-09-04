@@ -4,7 +4,7 @@ import type { IAccount } from '@/types'
 import { localCache } from '@/utils/cache'
 import router from '@/router'
 import { ElMessage } from 'element-plus'
-import { mapMenusToRoutes } from '@/utils/map-menus'
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus'
 
 // 防止敲错
 import { LOGIN_TOKEN } from '@/global/constants'
@@ -14,6 +14,7 @@ interface ILoginState {
   token: string
   userInfo: any
   userMenus: any
+  permissions: string[]
 }
 
 const useLoginStore = defineStore('login', {
@@ -22,7 +23,8 @@ const useLoginStore = defineStore('login', {
     token: '',
     // 用户信息
     userInfo: {},
-    userMenus: []
+    userMenus: [],
+    permissions: []
   }),
   actions: {
     async loginAccountAction(account: IAccount) {
@@ -52,6 +54,10 @@ const useLoginStore = defineStore('login', {
       const mainStore = useMainStore()
       mainStore.fetchEntireDataAction()
 
+      // 重要: 获取登录用户的所有按钮的权限
+      const permissions = mapMenusToPermissions(this.userMenus)
+      this.permissions = permissions
+
       // 5.动态添加路由(重要)
       const routes = mapMenusToRoutes(this.userMenus)
       routes.forEach((route) => router.addRoute('main', route))
@@ -76,7 +82,11 @@ const useLoginStore = defineStore('login', {
         const mainStore = useMainStore()
         mainStore.fetchEntireDataAction()
 
-        // 2.动态添加路由
+        // 2.获取按钮的权限
+        const permissions = mapMenusToPermissions(userMenus)
+        this.permissions = permissions
+
+        // 3.动态添加路由
         const routes = mapMenusToRoutes(userMenus)
         routes.forEach((route) => router.addRoute('main', route))
       }
