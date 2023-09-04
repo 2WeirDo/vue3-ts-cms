@@ -8,6 +8,7 @@
     </div>
 
     <div class="table">
+      <!-- 通过v-bind直接将对象传递给el-table达到使得el-table变为一个树形表格 -->
       <el-table :data="pageList" border style="width: 100%" v-bind="contentConfig.childrenTree">
         <template v-for="item in contentConfig.propsList" :key="item.prop">
           <!-- 时间相关 -->

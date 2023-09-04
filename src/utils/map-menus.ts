@@ -86,3 +86,29 @@ export function mapPathToBreadcrumbs(path: string, userMenus: any[]) {
   }
   return breadcrumbs
 }
+
+/**
+ * 菜单映射到id的列表
+ * @param menuList
+ */
+
+// 递归函数，用于遍历一个层次化的菜单结构，并提取叶子节点的 id 值。
+// 将嵌套的菜单结构转换为一个扁平的 id 数组，以便于处理和使用这些 id 值。
+export function mapMenuListToIds(menuList: any[]) {
+  const ids: number[] = []
+
+  function recurseGetId(menus: any[]) {
+    for (const item of menus) {
+      if (item.children) {
+        // 有孩子先不设置
+        recurseGetId(item.children)
+      } else {
+        // 没有子菜单才设置
+        ids.push(item.id)
+      }
+    }
+  }
+  recurseGetId(menuList)
+
+  return ids
+}

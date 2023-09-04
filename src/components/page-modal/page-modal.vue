@@ -36,6 +36,7 @@
                 </el-select>
               </template>
 
+              <!-- 这是我们自定义类型的插槽 -->
               <template v-if="item.type === 'custom'">
                 <slot :name="item.slotName"></slot>
               </template>
@@ -73,6 +74,8 @@ interface IModalProps {
 }
 
 // 0.定义props
+// 在之前 - 这里放泛型的时候不支持从外部导入类型, 其它地方可以
+// 在最新版本的Vue3.3之中已经解除了该限制
 const props = defineProps<IModalProps>()
 
 // 1.定义内部的属性
@@ -115,6 +118,7 @@ function handleConfirmClick() {
   dialogVisible.value = false
 
   let infoData = formData
+  // otherInfo是role.vue传递过来的
   if (props.otherInfo) {
     infoData = { ...infoData, ...props.otherInfo }
   }
