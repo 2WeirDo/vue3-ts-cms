@@ -35,7 +35,7 @@ onMounted(() => {
   // 这里我们额外加一个节流操作
   const resizeAction = throttle(() => {
     echartInstance.resize()
-  }, 100)
+  }, 500)
   window.addEventListener('resize', resizeAction)
 })
 </script>

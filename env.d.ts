@@ -8,3 +8,4 @@
 //   export default component
 // }
 declare module '*.mjs'
+declare module 'underscore'
