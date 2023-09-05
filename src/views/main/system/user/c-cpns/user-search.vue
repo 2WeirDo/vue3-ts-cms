@@ -5,24 +5,24 @@
       <el-row :gutter="20">
         <!-- 一个el-row就行了, 后面会自动排(前三个占满后面就会新增一排) -->
         <!-- 减去间距为20, 一共24 , 就是三个el-form-item为一行 -->
-        <el-col :span="8">
+        <el-col :span="8" :xs="24" :sm="12" :md="8">
           <!-- 要想有重置功能, 必须要给每个el-form-item绑定prop属性, 这样它才知道对你哪个字段进行重置 -->
           <el-form-item label="用户名" prop="name">
             <el-input v-model="searchForm.name" placeholder="请输入查询的用户名" />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" :xs="24" :sm="12" :md="8">
           <el-form-item label="真实姓名" prop="realname">
             <el-input v-model="searchForm.realname" placeholder="请输入查询的真实姓名" />
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" :xs="24" :sm="12" :md="8">
           <el-form-item label="手机号码" prop="cellphone">
             <el-input v-model="searchForm.cellphone" placeholder="请输入查询的手机号码" />
           </el-form-item>
         </el-col>
 
-        <el-col :span="8">
+        <el-col :span="8" :xs="24" :sm="12" :md="8">
           <el-form-item label="状态" prop="enable">
             <el-select
               v-model="searchForm.enable"
@@ -34,7 +34,7 @@
             </el-select>
           </el-form-item>
         </el-col>
-        <el-col :span="8">
+        <el-col :span="8" :xs="24" :sm="12" :md="8">
           <el-form-item label="创建时间" prop="createAt">
             <!-- 不知道为什么, 这里日期的v-model前不能加: -->
             <el-date-picker
