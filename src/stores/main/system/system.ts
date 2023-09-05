@@ -8,6 +8,7 @@ import {
   newPageData,
   postPageListData
 } from '@/service/main/system/system'
+// import { postStoryListData } from '@/service/main/story/story'
 import { defineStore } from 'pinia'
 import type { ISystemState } from './type'
 import { ElMessage } from 'element-plus'
@@ -98,6 +99,13 @@ const useSystemStore = defineStore('system', {
       const mainStore = useMainStore()
       mainStore.fetchEntireDataAction()
     }
+    // async postStoryListAction() {
+    //   const storyListResult = await postStoryListData()
+    //   const { totalCount, list } = storyListResult.data
+
+    //   this.storyList = list
+    //   this.storyTotalCount = totalCount
+    // }
   }
 })
 

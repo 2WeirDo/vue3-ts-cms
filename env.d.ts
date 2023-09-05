@@ -9,3 +9,4 @@
 // }
 declare module '*.mjs'
 declare module 'underscore'
+declare module '@wangeditor/editor-for-vue'

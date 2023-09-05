@@ -131,12 +131,15 @@ systemStore.$onAction(({ name, after }) => {
     }
   })
 })
-fetchPageListData()
 
-// 2.获取usersList数据,进行展示
+// 2.获取List数据,进行展示
 const { pageList, pageTotalCount } = storeToRefs(systemStore)
 
+// 进入页面发起请求
+fetchPageListData()
+
 // 3.页码相关的逻辑
+
 function handleSizeChange() {
   fetchPageListData()
 }
@@ -147,6 +150,8 @@ function handleCurrentChange() {
 // 4.定义函数, 用于发送网络请求
 function fetchPageListData(formData: any = {}) {
   if (!isQuery) return
+  // 以上这句话 : 这个bug困扰了我好久 -- 2023/9/6/凌晨1点
+
   // 1.获取offset/size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
@@ -155,6 +160,7 @@ function fetchPageListData(formData: any = {}) {
   // 2.发起网络请求
   const queryInfo = { ...pageInfo, ...formData }
   systemStore.postPageListAction(props.contentConfig.pageName, queryInfo)
+  // systemStore.postStoryListAction()
 }
 
 // 5.删除/新建/编辑的操作

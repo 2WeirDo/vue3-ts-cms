@@ -1,18 +1,18 @@
 const searchConfig = {
-  pageName: 'role',
+  pageName: 'story',
   formItems: [
     {
       type: 'input',
-      prop: 'name',
-      label: '角色名称',
-      placeholder: '请输入查询的角色名称',
+      prop: 'title',
+      label: '故事标题',
+      placeholder: '请输入查询的故事标题',
       initialValue: ''
     },
     {
       type: 'input',
-      prop: 'leader',
-      label: '权限介绍',
-      placeholder: '请输入查询的权限介绍'
+      prop: 'content',
+      label: '故事内容',
+      placeholder: '请输入查询的故事内容'
     },
     {
       type: 'date-picker',
