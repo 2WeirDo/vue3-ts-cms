@@ -33,6 +33,7 @@ declare module 'vue' {
     ElFromItem: typeof import('element-plus/es')['ElFromItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElImage: typeof import('element-plus/es')['ElImage']
     ElInpu: typeof import('element-plus/es')['ElInpu']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElLink: typeof import('element-plus/es')['ElLink']
