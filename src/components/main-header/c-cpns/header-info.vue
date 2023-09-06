@@ -2,15 +2,21 @@
   <div class="header-info">
     <!-- 1.操作小图标 -->
     <div class="operation">
-      <span>
-        <el-icon><Message /></el-icon>
+      <span @click="toolClick">
+        <el-icon><Tools /></el-icon>
       </span>
-      <span>
+      <span @click="formClick">
+        <el-icon><Platform /></el-icon>
+      </span>
+      <span @click="storyClick">
+        <el-icon><Edit /></el-icon>
+      </span>
+      <span @click="messageClick">
         <span class="dot"></span>
         <el-icon><ChatDotRound /></el-icon>
       </span>
-      <span>
-        <el-icon><Search /></el-icon>
+      <span @click="goodsClick">
+        <el-icon><Goods /></el-icon>
       </span>
     </div>
 
@@ -58,6 +64,21 @@ function handleExitClick() {
   localCache.removeCache(LOGIN_TOKEN)
   router.push('/login')
   ElMessage.success('您已退出成功~~')
+}
+function storyClick() {
+  router.push('/main/story/chat')
+}
+function formClick() {
+  router.push('/main/analysis/dashboard`')
+}
+function messageClick() {
+  router.push('/main/story/list')
+}
+function goodsClick() {
+  router.push('/main/product/category')
+}
+function toolClick() {
+  router.push('/main/system/user')
 }
 </script>
 
