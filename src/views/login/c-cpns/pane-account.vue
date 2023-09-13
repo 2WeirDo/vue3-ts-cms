@@ -10,10 +10,10 @@
     >
       <!-- 这里的prop定义的就是相应规则的名字 -->
       <el-form-item label="帐号" prop="name">
-        <el-input v-model="account.name" />
+        <el-input v-model="account.name" placeholder="coderwhy" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="account.password" show-password />
+        <el-input v-model="account.password" show-password placeholder="123456" />
       </el-form-item>
     </el-form>
   </div>

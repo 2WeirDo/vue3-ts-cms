@@ -16,6 +16,7 @@ module.exports = {
   },
   // 自定义规则
   rules: {
+    // 假如说出现了不希望出现的警告：那我们可以将其添加到eslint的规则里面
     '@typescript-eslint/no-unused-vars': 'off',
     'vue/multi-word-component-names': 'off'
   }

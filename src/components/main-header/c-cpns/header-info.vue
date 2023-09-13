@@ -35,14 +35,14 @@
               <el-icon><CircleClose /></el-icon>
               <span>退出系统</span>
             </el-dropdown-item>
-            <el-dropdown-item divided>
+            <!-- <el-dropdown-item divided>
               <el-icon><InfoFilled /></el-icon>
               <span>个人信息</span>
             </el-dropdown-item>
             <el-dropdown-item divided>
               <el-icon><Unlock /></el-icon>
               <span>修改密码</span>
-            </el-dropdown-item>
+            </el-dropdown-item> -->
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -69,7 +69,7 @@ function storyClick() {
   router.push('/main/story/chat')
 }
 function formClick() {
-  router.push('/main/analysis/dashboard`')
+  router.push('/main/analysis/dashboard')
 }
 function messageClick() {
   router.push('/main/story/list')

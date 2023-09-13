@@ -13,6 +13,8 @@ function loadLocalRoutes() {
   // 1.2.将加载的对象放到localRoutes
   for (const key in files) {
     const module = files[key]
+    // console.log(module)
+    // module.default就是一个路由对象
     localRoutes.push(module.default)
   }
   return localRoutes
