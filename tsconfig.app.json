@@ -7,13 +7,13 @@
     "auto-imports.d.d.ts",
     "components.d.ts",
     "custom-types.d.ts"
-  ],
+],
 
   "exclude": ["src/**/__tests__/*"],
   // 用于指定编译器应包含哪些文件和排除哪些文件。 include 是一个文件或文件夹的数组， exclude 是一个文件或文件夹的数
   // 组。如果不指定，编译器默认包含当前目录及其子目录下的所有 TypeScript 文件（ .ts , .d.ts 和 .tsx ），
   // 排除 node_modules 、 bower_components 、 jspm_packages 目录以及 outDir 指定的目录。
-  
+
   "compilerOptions": {
     // 这是一个对象，用于指定编译器应如何编译 TypeScript 代码。
     // 合成(是tsconfig.json的一个引入)
