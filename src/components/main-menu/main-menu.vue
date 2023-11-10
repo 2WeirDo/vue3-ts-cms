@@ -3,7 +3,7 @@
     <!-- logo -->
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" alt="" />
-      <h2 v-show="!isFold" class="title">后台管理系统</h2>
+      <h2 v-show="!isFold" class="title">多权限管理大师</h2>
     </div>
     <!-- menu -->
     <div class="menu">
