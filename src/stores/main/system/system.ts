@@ -27,7 +27,7 @@ const useSystemStore = defineStore('system', {
     async postUsersListAction(queryInfo: any) {
       const usersListResult = await postUsersListData(queryInfo)
       const { totalCount, list } = usersListResult.data
-      this.usersTotalCount = totalCount
+      this.usersTotalCount = parseInt(totalCount)
       this.usersList = list
     },
     async deleteUserByIdAction(id: number) {
@@ -73,7 +73,7 @@ const useSystemStore = defineStore('system', {
       const { totalCount, list } = pageListResult.data
 
       this.pageList = list
-      this.pageTotalCount = totalCount
+      this.pageTotalCount = parseInt(totalCount)
     },
     async deletePageByIdAction(pageName: string, id: number) {
       const deleteResult = await deletePageById(pageName, id)
