@@ -10,10 +10,44 @@ import vue from '@vitejs/plugin-vue'
 // 进行 gzip 压缩
 import compression from 'vite-plugin-compression'
 
+import { visualizer } from 'rollup-plugin-visualizer'
+
+// 配置 CDN
+import importToCDN, { autoComplete } from 'vite-plugin-cdn-import'
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
+    visualizer({
+      open: true, // 在默认用户代理中打开生成的文件
+      gzipSize: true, // 收集 gzip 大小并将其显示
+      brotliSize: true, // 收集 brotli 大小并将其显示
+      filename: 'stats.html' // 分析图生成的文件名
+    }),
+    importToCDN({
+      prodUrl: 'https://unpkg.com/{name}@{path}',
+      modules: [
+        autoComplete('vue'), // 可以自动加速的
+        autoComplete('axios'),
+        {
+          name: 'element-plus',
+          var: 'ElementPlus',
+          path: '2.3.9',
+          css: '2.3.9/dist/index.css'
+        },
+        {
+          name: 'vue-router',
+          var: 'VueRouter',
+          path: '4.2.4'
+        },
+        {
+          name: 'pinia',
+          var: 'Pinia',
+          path: '2.1.4'
+        }
+      ]
+    }),
     AutoImport({
       resolvers: [ElementPlusResolver()]
     }),
