@@ -7,6 +7,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 // 自动配置ElMessage相关组件的样式
 import { createStyleImportPlugin, ElementPlusResolve } from 'vite-plugin-style-import'
 import vue from '@vitejs/plugin-vue'
+// 进行 gzip 压缩
+import compression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,6 +31,10 @@ export default defineConfig({
           }
         }
       ]
+    }),
+    compression({
+      algorithm: 'gzip', // 压缩算法，可选['gzip'，'brotliCompress'，'deflate'，'deflateRaw']
+      threshold: 10240 // 如果体积大于10kb阈值，则进行压缩，参数单位为b
     })
   ],
   resolve: {
